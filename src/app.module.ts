@@ -6,7 +6,6 @@ import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
 import { User } from './users/entities/user.entity';
-import { Verification } from './users/entities/verification.entity';
 import { ContentsModule } from './contents/contents.module';
 import { Content } from './contents/entities/content.entity';
 import { Category } from './contents/entities/category.entity';
@@ -47,20 +46,15 @@ import { NestedContent } from './collections/entities/nested-content.entity';
       ...(process.env.DATABASE_URL
         ? { url: process.env.DATABASE_URL }
         : {
-            host: process.env.DB_HOST,
+            host: process.env.POSTGRES_DB,
             port: +process.env.DB_PORT,
-            username: process.env.DB_USERNAME,
-            password: process.env.DB_PW,
-            database: process.env.DB_NAME,
+            username: process.env.POSTGRES_USER,
+            password: process.env.POSTGRES_PASSWORD,
           }),
-      synchronize: process.env.NODE_ENV !== 'prod',
+      synchronize: true, //process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
       entities: [User, Content, Category, Collection, NestedContent],
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
     }),
     UsersModule,
     CommonModule,
