@@ -6,7 +6,7 @@ services:
     restart: always
     ports:
       - 6379:6379
-    mem_limit: 256m
+    mem_limit: 128m
     networks:
       - shared-network
   postgres: # Name of container
@@ -23,7 +23,7 @@ services:
       - shared-network
   api:
     container_name: pracawsdeploy
-    image: hou27/pracawsdeploy:0.1.7
+    image: 172851517616.dkr.ecr.ap-northeast-2.amazonaws.com/pracawsdeploy
     networks:
       - shared-network
     # build:
@@ -33,7 +33,7 @@ services:
       - .env.prod
     ports:
       - 4000:4000
-    mem_limit: 256m
+    mem_limit: 512m
     depends_on:
       - redis
       - postgres
