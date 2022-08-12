@@ -1,0 +1,40 @@
+services:
+  api:
+    container_name: pracawsdeploy
+    image: hou27/pracawsdeploy:0.1.2
+    networks:
+      - shared-network
+    build:
+      dockerfile: Dockerfile
+      context: .
+    env_file:
+      - .env.prod
+    # Run a command against the development stage of the image
+    command: npm run start:dev
+    ports:
+      - 4000:4000
+    depends_on:
+      - redis
+      - postgres
+  redis: # Name of container
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    networks:
+      - shared-network
+  postgres: # Name of container
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PW}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+    ports:
+      - 5432:5432
+    networks:
+      - shared-network
+networks:
+  shared-network:
+    driver: bridge

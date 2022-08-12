@@ -29,6 +29,7 @@ export const verifyEmailExpiration = 60 * 5;
       ...(process.env.REDIS_URL
         ? { url: process.env.REDIS_URL }
         : {
+            host: process.env.REDIS_HOST,
             port: 6379,
           }),
     }),

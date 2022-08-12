@@ -3,4 +3,5 @@
 .dockerignore
 Dockerfile
 *.md
+*.yml
 node_modules

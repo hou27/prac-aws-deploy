@@ -14,6 +14,7 @@ import * as redisStore from 'cache-manager-redis-store';
       ...(process.env.REDIS_URL
         ? { url: process.env.REDIS_URL }
         : {
+            host: process.env.REDIS_HOST,
             port: 6379,
           }),
     }),
