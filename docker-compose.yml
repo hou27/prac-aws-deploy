@@ -23,7 +23,8 @@ services:
       - shared-network
   api:
     container_name: pracawsdeploy
-    image: 172851517616.dkr.ecr.ap-northeast-2.amazonaws.com/pracawsdeploy
+    # image: 172851517616.dkr.ecr.ap-northeast-2.amazonaws.com/pracawsdeploy
+    image: hou27/pracawsdeploy:latest
     networks:
       - shared-network
     # build:

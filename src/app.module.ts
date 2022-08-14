@@ -28,11 +28,12 @@ import { NestedContent } from './collections/entities/nested-content.entity';
       // ignoreEnvFile: process.env.NODE_ENV === 'prod',
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('dev', 'prod', 'test').required(),
-        DB_HOST: Joi.string(),
         DB_PORT: Joi.string(),
-        DB_USERNAME: Joi.string(),
-        DB_PW: Joi.string(),
-        DB_NAME: Joi.string(),
+        POSTGRES_DB: Joi.string(),
+        POSTGRES_USER: Joi.string(),
+        POSTGRES_PASSWORD: Joi.string(),
+        REDIS_HOST: Joi.string(),
+        REDIS_PORT: Joi.string(),
         JWT_ACCESS_TOKEN_PRIVATE_KEY: Joi.string().required(),
         JWT_REFRESH_TOKEN_PRIVATE_KEY: Joi.string().required(),
         MAILGUN_API_KEY: Joi.string().required(),
@@ -43,15 +44,11 @@ import { NestedContent } from './collections/entities/nested-content.entity';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      ...(process.env.DATABASE_URL
-        ? { url: process.env.DATABASE_URL }
-        : {
-            host: process.env.POSTGRES_DB,
-            port: +process.env.DB_PORT,
-            username: process.env.POSTGRES_USER,
-            password: process.env.POSTGRES_PASSWORD,
-          }),
-      synchronize: true, //process.env.NODE_ENV !== 'prod',
+      host: process.env.POSTGRES_DB,
+      port: +process.env.DB_PORT,
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      synchronize: process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
       entities: [User, Content, Category, Collection, NestedContent],
