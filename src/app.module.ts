@@ -25,7 +25,6 @@ import { NestedContent } from './collections/entities/nested-content.entity';
           : process.env.NODE_ENV === 'prod'
           ? '.env.prod'
           : '.env.test',
-      // ignoreEnvFile: process.env.NODE_ENV === 'prod',
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('dev', 'prod', 'test').required(),
         DB_PORT: Joi.string(),
